@@ -1,0 +1,39 @@
+[core]
+	excludesfile = /Users/frasercrumpler/.gitignore
+    editor = nvim
+    pager = delta
+	whitespace = trail,space-before-tab
+	commitGraph = true
+[user]
+	email = fraserc@xacom.com.au
+    name = Fraser Crumpler
+[delta]
+    navigate = true  # use n and N to move between diff sections
+    dark = true      # or light = true, or omit for auto-detection
+    side-by-side = true
+[merge]
+    conflictStyle = zdiff3
+	ff = false
+[format]
+	pretty = oneline
+[log]
+    abbrevCommit = true
+[color]
+	ui = auto
+[diff]
+	colorMoved = default
+	algorithm = histogram
+[push]
+	autoSetupRemote = true
+[alias]
+	st = status -sb
+	co = checkout
+	br = branch -av
+    lg = log --decorate --graph --all --date=short \
+        --pretty=format:'%>|(5)%C(dim white) %ad %<(15,trunc)%an %Creset  %C(yellow)%h%Creset %C(auto)%d%Creset %s'
+    lga = log --stat --pretty=fuller --graph --all
+    #git diff --stat a1b2c3d..HEAD -- ':(exclude)dist/'
+[apply]
+	whitespace = error
+[fetch]
+	verbose = true
