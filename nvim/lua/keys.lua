@@ -15,8 +15,8 @@ keymap("n", "<leader>v", "<cmd>vsplit<CR>", { desc = "Split window vertically" }
 keymap("n", "<leader>s", "<cmd>split<CR>", { desc = "Split window horizontally" })
 
 keymap("n", "<leader>th", function()
-	vim.cmd("TSBufDisable highlight")
-	vim.cmd("TSBufEnable highlight")
+	vim.treesitter.stop()
+	vim.treesitter.start()
 end, { desc = "Reset Treesitter highlighting" })
 
 vim.keymap.set("n", "<leader>/", function()

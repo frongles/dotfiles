@@ -34,6 +34,10 @@ vim.o.updatetime = 200
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(args)
 		local client = vim.lsp.get_client_by_id(args.data.client_id)
+		local bufname = vim.api.nvim_buf_get_name(args.buf)
+		if bufname:match("%.html$") then
+			return
+		end
 		if not client or not client:supports_method("textDocument/documentHighlight") then
 			return
 		end
