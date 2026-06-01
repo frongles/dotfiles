@@ -18,6 +18,7 @@ require("mason-lspconfig").setup({
 		"bashls",
 		"yamlls",
 		"wgsl_analyzer",
+		"html",
 	},
 })
 
@@ -126,7 +127,7 @@ vim.lsp.config["clangd"] = {
 	on_attach = on_attach,
 }
 
-vim.lsp.config["ts_ls"] = {
+vim.lsp.config["html"] = {
 	capabilities = capabilities,
 	on_attach = on_attach,
 }
@@ -192,3 +193,22 @@ vim.diagnostic.config({
 	underline = true, -- underline problematic code
 	update_in_insert = false,
 })
+
+vim.lsp.config["ts_ls"] = {
+	capabilities = capabilities,
+	on_attach = on_attach,
+	filetypes = { "typescript", "javascript", "html" },
+}
+
+vim.lsp.config["html"] = {
+	capabilities = capabilities,
+	on_attach = on_attach,
+	filetypes = { "html" },
+	init_options = {
+		configurationSection = { "html", "css", "javascript" },
+		embeddedLanguages = {
+			css = true,
+			javascript = true,
+		},
+	},
+}
