@@ -29,8 +29,6 @@ vim.api.nvim_create_user_command("E", function(opts)
 	require("telescope.builtin").find_files({ default_text = opts.args })
 end, { nargs = "*" })
 
-vim.o.updatetime = 200
-
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(args)
 		local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -85,6 +83,13 @@ vim.filetype.add({
 		path = "ini",
 		slice = "ini",
 	},
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "*",
+	callback = function(ev)
+		pcall(vim.treesitter.start, ev.buf)
+	end,
 })
 
 -- ===================================

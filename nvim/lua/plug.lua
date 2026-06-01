@@ -52,7 +52,7 @@ require("lazy").setup({
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
 			require("lualine").setup({
-				options = { theme = "gruvbox" },
+				--options = { theme = "gruvbox" },
 			})
 		end,
 	},
@@ -168,6 +168,7 @@ require("lazy").setup({
 					"typescript",
 					"markdown",
 					"toml",
+					"wgsl",
 				},
 				sync_install = false,
 				auto_install = true,
@@ -190,6 +191,7 @@ require("lazy").setup({
 				"typescript",
 				"markdown",
 				"toml",
+				"wgsl",
 			})
 		end,
 	},

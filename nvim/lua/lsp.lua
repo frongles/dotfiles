@@ -17,6 +17,7 @@ require("mason-lspconfig").setup({
 		"stylua",
 		"bashls",
 		"yamlls",
+		"wgsl_analyzer",
 	},
 })
 
@@ -65,7 +66,6 @@ local on_attach = function(_, bufnr)
 end
 
 -- LSP server setup (using lspconfig)
-local lspconfig = require("lspconfig")
 
 vim.lsp.config["rust_analyzer"] = {
 	capabilities = capabilities,
@@ -148,6 +148,10 @@ vim.lsp.config["postgres_lsp"] = {
 }
 
 vim.lsp.config["bashls"] = {
+	capabilities = capabilities,
+	on_attach = on_attach,
+}
+vim.lsp.config["wgsl_analyzer"] = {
 	capabilities = capabilities,
 	on_attach = on_attach,
 }

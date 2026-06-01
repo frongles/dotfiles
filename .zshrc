@@ -8,7 +8,9 @@ export RUSTC_WRAPPER=/opt/homebrew/bin/sccache
 export SCCACHE_CACHE_SIZE="20G"
 
 # go binaries
-export PATH="$PATH:/Users/frasercrumpler/go/bin"
+export PATH="$PATH:$HOME/go/bin"
+
+export PATH="$PATH:$HOME/.local/bin"
 
 # aliases
 alias ls="eza -la"
