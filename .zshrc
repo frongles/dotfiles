@@ -7,6 +7,8 @@ export RUSTC_WRAPPER=/opt/homebrew/bin/sccache
 # sccache max size
 export SCCACHE_CACHE_SIZE="20G"
 
+export CARGO_PROFILE_DEV_DEBUG=false
+
 # go binaries
 export PATH="$PATH:$HOME/go/bin"
 
@@ -29,3 +31,15 @@ nvm() {
 node() { nvm; node "$@"; }
 npm()  { nvm; npm "$@"; }
 npx()  { nvm; npx "$@"; }
+
+
+# Cargo cross automation
+crossmac() {
+  TMPDIR="$HOME/.cache/rust-cross-compiler" cargo cross build \
+    --target aarch64-unknown-linux-gnu --glibc-version 2.34 "$@"
+}
+crosslinux() {
+  TMPDIR="$HOME/.cache/rust-cross-compiler" cargo cross build \
+    --target x86_64-unknown-linux-gnu --glibc-version 2.34 "$@"
+}
+

@@ -64,6 +64,7 @@ local on_attach = function(_, bufnr)
 	bufmap("n", "K", vim.lsp.buf.hover, "Hover docs")
 	bufmap("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
 	bufmap("n", "<leader>ca", vim.lsp.buf.code_action, "Code action")
+	bufmap("v", "<leader>ca", vim.lsp.buf.code_action, "Code action")
 end
 
 -- LSP server setup (using lspconfig)
@@ -79,8 +80,8 @@ vim.lsp.config["rust_analyzer"] = {
 			checkOnSave = true,
 			check = {
 				--allTargets = false,
-				--command = "clippy",
-				-- extraArgs = { ["--no-deps"] },
+				command = "clippy",
+				--features = "all",
 				--extraEnv = { },
 				workspace = true,
 			},
@@ -99,7 +100,7 @@ vim.lsp.config["rust_analyzer"] = {
 				},
 			},
 			diagnostics = {
-				experiment = { enable = true },
+				experimental = { enable = true },
 				styleLints = { enable = true },
 			},
 			highlightRelated = {

@@ -13,7 +13,7 @@
     side-by-side = true
 [merge]
     conflictStyle = zdiff3
-	ff = false
+	ff = true
 [format]
 	pretty = oneline
 [log]
