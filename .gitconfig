@@ -18,22 +18,39 @@
 	pretty = oneline
 [log]
     abbrevCommit = true
+[branch]
+    sort = -committerdate
+[tag]
+    sort = version:refname
 [color]
-	ui = auto
+    ui = auto
+[status]
+    showStash = true
+[commit]
+    verbose = true
 [diff]
 	colorMoved = default
-	algorithm = histogram
+    algorithm = histogram
+    mnemonicPrefix = true   # i/ w/ c/ instead of a/ b/ — tells you index vs worktree vs commit
+    renames = copies        # detect copies, not just renames
+[diff "rust"]
+    xfuncname = "^[ \t]*(pub|fn|impl|struct|enum|trait|mod)[^;]*$"
 [push]
-	autoSetupRemote = true
+    autoSetupRemote = true
+    followTags = true
 [alias]
+    mg = merge --no-commit
 	st = status -sb
 	co = checkout
 	br = branch -av
     lg = log --decorate --graph --all --date=short \
         --pretty=format:'%>|(5)%C(dim white) %ad %<(15,trunc)%an %Creset  %C(yellow)%h%Creset %C(auto)%d%Creset %s'
     lga = log --stat --pretty=fuller --graph --all
+    pf = push --force-with-lease --force-if-includes
     #git diff --stat a1b2c3d..HEAD -- ':(exclude)dist/'
 [apply]
 	whitespace = error
 [fetch]
-	verbose = true
+    verbose = true
+    prune = true
+    pruneTags = true
