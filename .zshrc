@@ -60,6 +60,7 @@ function zle-keymap-select {
 zle -N zle-keymap-select
 
 function zle-line-init {
-  echo -ne '\e[6 q'  # start each new prompt in insert-mode cursor
+  zle -K vicmd;
+  echo -ne '\e[2 q'  # start each new prompt in insert-mode cursor
 }
 zle -N zle-line-init
