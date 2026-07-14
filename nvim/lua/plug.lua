@@ -263,4 +263,5 @@ require("lazy").setup({
 	{ "hrsh7th/cmp-nvim-lsp" }, -- LSP source for cmp
 	{ "L3MON4D3/LuaSnip" }, -- snippet engine
 	{ "saadparwaiz1/cmp_luasnip" }, -- snippet completions
+	{ "github/copilot.vim" },
 })

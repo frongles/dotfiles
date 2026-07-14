@@ -8,6 +8,9 @@ export RUSTC_WRAPPER=/opt/homebrew/bin/sccache
 export SCCACHE_CACHE_SIZE="20G"
 
 export CARGO_PROFILE_DEV_DEBUG=false
+export CARGO_PROFILE_DEV_STRIP=true
+
+export PSQL_PAGER="bat --wrap never --plain"
 
 # go binaries
 export PATH="$PATH:$HOME/go/bin"
