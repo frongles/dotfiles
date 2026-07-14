@@ -43,3 +43,20 @@ crosslinux() {
     --target x86_64-unknown-linux-gnu --glibc-version 2.34 "$@"
 }
 
+bindkey -v
+
+export KEYTIMEOUT=1
+
+function zle-keymap-select {
+  if [[ ${KEYMAP} == vicmd ]]; then
+    echo -ne '\e[2 q'  # block cursor, normal mode
+  else
+    echo -ne '\e[6 q'  # bar cursor, insert mode
+  fi
+}
+zle -N zle-keymap-select
+
+function zle-line-init {
+  echo -ne '\e[6 q'  # start each new prompt in insert-mode cursor
+}
+zle -N zle-line-init
