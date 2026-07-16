@@ -28,6 +28,7 @@
     showStash = true
 [commit]
     verbose = true
+	template = /Users/frasercrumpler/.gitmessage
 [diff]
 	colorMoved = default
     algorithm = histogram
