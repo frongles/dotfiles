@@ -1,6 +1,8 @@
 # Starship shell prompts
 eval "$(starship init zsh)"
 
+eval "$(direnv hook zsh)"
+
 # cache for rust builds
 export RUSTC_WRAPPER=/opt/homebrew/bin/sccache
 
@@ -60,7 +62,19 @@ function zle-keymap-select {
 zle -N zle-keymap-select
 
 function zle-line-init {
-  zle -K vicmd;
-  echo -ne '\e[2 q'  # start each new prompt in insert-mode cursor
+  #zle -K vicmd;
+  echo -ne '\e[6 q'  # start each new prompt in insert-mode cursor
 }
 zle -N zle-line-init
+
+export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --exclude .git --exclude node_modules --exclude Library --exclude go --exclude venv/'
+
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+
+export PATH="$ANDROID_HOME/platform-tools:$PATH"
+export PATH="$ANDROID_HOME/emulator:$PATH"
+export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$PATH"
+
+
+export JAVA_HOME="/opt/homebrew/opt/openjdk@25/libexec/openjdk.jdk/Contents/Home"
+export ANDROID_HOME="$HOME/Library/Android/sdk"

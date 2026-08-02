@@ -19,12 +19,18 @@ require("mason-lspconfig").setup({
 		"yamlls",
 		"wgsl_analyzer",
 		"html",
+		"kotlin_lsp",
+	},
+
+	automatic_enable = {
+		exclude = { "kotlin_lsp" },
 	},
 })
 
 require("mason-tool-installer").setup({
 	ensure_installed = {
 		"stylua",
+		"prettierd",
 	},
 })
 
@@ -52,26 +58,35 @@ cmp.setup({
 -- capabilities for nvim-cmp
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-local on_attach = function(_, bufnr)
-	local bufmap = function(mode, lhs, rhs, desc)
-		vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
-	end
+local lsp_keymaps = vim.api.nvim_create_augroup("user-lsp-keymaps", { clear = true })
 
-	bufmap("n", "gd", vim.lsp.buf.definition, "Go to definition")
-	bufmap("n", "gD", vim.lsp.buf.declaration, "Go to declaration")
-	bufmap("n", "gi", vim.lsp.buf.implementation, "Go to implementation")
-	bufmap("n", "gr", vim.lsp.buf.references, "List references")
-	bufmap("n", "K", vim.lsp.buf.hover, "Hover docs")
-	bufmap("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
-	bufmap("n", "<leader>ca", vim.lsp.buf.code_action, "Code action")
-	bufmap("v", "<leader>ca", vim.lsp.buf.code_action, "Code action")
-end
+vim.api.nvim_create_autocmd("LspAttach", {
+	group = lsp_keymaps,
+
+	callback = function(event)
+		local bufnr = event.buf
+
+		local bufmap = function(mode, lhs, rhs, desc)
+			vim.keymap.set(mode, lhs, rhs, {
+				buffer = bufnr,
+				desc = desc,
+			})
+		end
+
+		bufmap("n", "gd", vim.lsp.buf.definition, "Go to definition")
+		bufmap("n", "gD", vim.lsp.buf.declaration, "Go to declaration")
+		bufmap("n", "gi", vim.lsp.buf.implementation, "Go to implementation")
+		bufmap("n", "lr", vim.lsp.buf.references, "List references")
+		bufmap("n", "K", vim.lsp.buf.hover, "Hover documentation")
+		bufmap("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
+		bufmap({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "Code action")
+	end,
+})
 
 -- LSP server setup (using lspconfig)
 
 vim.lsp.config["rust_analyzer"] = {
 	capabilities = capabilities,
-	on_attach = on_attach,
 
 	-- https://rust-analyzer.github.io/book/configuration
 	settings = {
@@ -125,42 +140,35 @@ vim.lsp.config["rust_analyzer"] = {
 
 vim.lsp.config["clangd"] = {
 	capabilities = capabilities,
-	on_attach = on_attach,
 }
 
 vim.lsp.config["html"] = {
 	capabilities = capabilities,
-	on_attach = on_attach,
 }
 
 vim.lsp.config["yamlls"] = {
 	capabilities = capabilities,
-	on_attach = on_attach,
 }
 
 vim.lsp.config["eslint"] = {
 	capabilities = capabilities,
-	on_attach = on_attach,
 }
 
 vim.lsp.config["postgres_lsp"] = {
 	capabilities = capabilities,
-	on_attach = on_attach,
 	workspace_required = true,
 }
 
 vim.lsp.config["bashls"] = {
 	capabilities = capabilities,
-	on_attach = on_attach,
 }
+
 vim.lsp.config["wgsl_analyzer"] = {
 	capabilities = capabilities,
-	on_attach = on_attach,
 }
 
 vim.lsp.config["basedpyright"] = {
 	capabilities = capabilities,
-	on_attach = on_attach,
 	basedpyright = {
 		settings = {
 			analysis = {
@@ -173,7 +181,6 @@ vim.lsp.config["basedpyright"] = {
 
 vim.lsp.config["lua_ls"] = {
 	capabilities = capabilities,
-	on_attach = on_attach,
 	settings = {
 		Lua = {
 			diagnostics = {
@@ -197,13 +204,11 @@ vim.diagnostic.config({
 
 vim.lsp.config["ts_ls"] = {
 	capabilities = capabilities,
-	on_attach = on_attach,
 	filetypes = { "typescript", "javascript", "html" },
 }
 
 vim.lsp.config["html"] = {
 	capabilities = capabilities,
-	on_attach = on_attach,
 	filetypes = { "html" },
 	init_options = {
 		configurationSection = { "html", "css", "javascript" },

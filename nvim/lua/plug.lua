@@ -73,12 +73,6 @@ require("lazy").setup({
 			vim.g.tmux_navigator_no_mappings = 1
 		end,
 	},
-	--[[ Markdown
-    {
-        'MeanderingProgrammer/render-markdown.nvim',
-        dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' },
-        opts = {},
-    }, --]]
 
 	-- Surround
 	{
@@ -169,6 +163,7 @@ require("lazy").setup({
 					"markdown",
 					"toml",
 					"wgsl",
+					"kotlin",
 				},
 				sync_install = false,
 				auto_install = true,
@@ -192,6 +187,7 @@ require("lazy").setup({
 				"markdown",
 				"toml",
 				"wgsl",
+				"kotlin",
 			})
 		end,
 	},
@@ -222,6 +218,38 @@ require("lazy").setup({
 					sorting_strategy = "ascending",
 					layout_config = { prompt_position = "top" },
 				},
+				pickers = {
+					find_files = {
+						find_command = {
+							"fd",
+							"--type",
+							"f",
+							"--strip-cwd-prefix",
+							"--exclude",
+							".git",
+							"--exclude",
+							"node_modules",
+							"--exclude",
+							"Library",
+							"--exclude",
+							"go",
+							"--exclude",
+							"venv",
+							"--exclude",
+							"Pictures",
+							"--exclude",
+							"Downloads",
+							"--exclude",
+							"ICare/HelpManual",
+							"--exclude",
+							"ICare/User Interface",
+							"--exclude",
+							"XacomPagerServer/client",
+							"--exclude",
+							"XacomPagerServer/fileServe",
+						},
+					},
+				},
 			})
 
 			-- load native sorter (if installed)
@@ -242,10 +270,69 @@ require("lazy").setup({
 				formatters_by_ft = {
 					lua = { "stylua" },
 					rust = { "rustfmt" },
+					typescript = { "prettierd", "prettier", stop_after_first = true },
+					typescriptreact = { "prettierd", "prettier", stop_after_first = true },
+					javascript = { "prettierd", "prettier", stop_after_first = true },
+					javascriptreact = { "prettierd", "prettier", stop_after_first = true },
 					--typescript = { "prettierd" },
 				},
 			})
 		end,
+	},
+
+	{
+		"AlexandrosAlexiou/kotlin.nvim",
+		ft = { "kotlin" },
+
+		dependencies = {
+			"mason-org/mason.nvim",
+			"mason-org/mason-lspconfig.nvim",
+
+			"stevearc/oil.nvim",
+			"folke/trouble.nvim",
+		},
+
+		config = function()
+			require("kotlin").setup({
+				root_markers = {
+					"settings.gradle.kts",
+					"settings.gradle",
+					"build.gradle.kts",
+					"build.gradle",
+					"gradlew",
+					".git",
+				},
+
+				build_tool = "gradle",
+
+				-- The Kotlin server is IntelliJ-based and relatively heavy.
+				jvm_args = {
+					"-Xmx4g",
+				},
+			})
+		end,
+	},
+
+	{
+		"inkarkat/vim-ReplaceWithRegister",
+		branch = "stable",
+		lazy = false,
+
+		init = function()
+			-- Neovim 0.11+ defines these as built-in LSP mappings.
+			-- They prevent `griw` and `gra...` from reaching the plugin.
+			pcall(vim.keymap.del, "n", "gri")
+			pcall(vim.keymap.del, "n", "gra")
+			pcall(vim.keymap.del, "x", "gra")
+		end,
+		--[[
+        --  griw      replace the current wort
+        --  grr       replace the current line
+        --  gr$       replace from cursor to end of line
+        --  grip      replace the inside of a paragraph
+        --  grap      replace around a paragraph
+        --  3grr      replace three lines
+        --]]
 	},
 
 	-- mason tool installer

@@ -14,6 +14,9 @@ vim.opt.incsearch = true
 vim.opt.hlsearch = true
 vim.opt.termguicolors = true
 vim.opt.cursorline = true
+vim.opt.scrolloff = 10
+
+vim.opt.clipboard:append("unnamedplus")
 
 -- Open Telescope file picker on startup if no file was provided
 vim.api.nvim_create_autocmd("VimEnter", {

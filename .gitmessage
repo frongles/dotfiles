@@ -1,0 +1,39 @@
+# <type>(<scope>)<!>: <short summary>  (max ~50 chars)
+# |<----  Using a maximum of 50 characters  ---->|
+
+
+# Body: explain WHAT and WHY, not how. Wrap at 72 chars.
+# |<----   Try to limit each line to a maximum of 72 characters   ---->|
+
+
+# Footer: issue refs, breaking changes, co-authors
+# e.g. Closes #123
+#      BREAKING CHANGE: /v2/auth now requires a bearer token
+#      Co-authored-by: Name <email@example.com>
+
+
+# ── Conventional Commit types ────────────────────────────────
+#   feat      new feature (minor version bump)
+#   fix       bug fix (patch version bump)
+#   docs      documentation only
+#   refactor  code change, no bug fix or feature
+#   perf      performance improvement
+#   test      adding or correcting tests
+#   build     build system or external dependencies
+#   ci        CI configuration and scripts
+#   chore     maintenance, tooling, no src/test changes
+#   style     formatting/whitespace, no logic change
+#   revert    reverts a previous commit
+#
+# ── Rules ────────────────────────────────────────────────────
+#   * Summary: imperative mood ("add", not "added"/"adds")
+#   * Summary: no trailing period, lowercase after the colon
+#   * Scope is optional: feat(alarm), fix(mailout), ci, docs
+#   * Append ! for breaking changes: feat(api)!: ...
+#   * Blank line between summary, body, and footer
+#   * Body: explain motivation and contrast with prior behavior
+#
+# ── Ask yourself ─────────────────────────────────────────────
+#   * Is this ONE logical change? If not, split it.
+#   * Would this message make sense in 6 months via git log?
+#   * Should this be a --fixup into an earlier commit instead?

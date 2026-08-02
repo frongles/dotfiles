@@ -48,6 +48,7 @@
         --pretty=format:'%>|(5)%C(dim white) %ad %<(15,trunc)%an %Creset  %C(yellow)%h%Creset %C(auto)%d%Creset %s'
     lga = log --stat --pretty=fuller --graph --all
     pf = push --force-with-lease --force-if-includes
+    amend = commit --amend --no-edit
     #git diff --stat a1b2c3d..HEAD -- ':(exclude)dist/'
 [apply]
 	whitespace = error
