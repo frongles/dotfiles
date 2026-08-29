@@ -22,10 +22,13 @@ export PATH="$PATH:$HOME/.local/bin"
 # aliases
 alias ls="eza -la"
 
+
+export NVM_DIR="$HOME/.nvm"
+export NVM_SYMLINK_CURRENT=true
+
 ## Lazy load nvm
 nvm() {
   unset -f nvm node npm npx  # remove the placeholder functions
-  export NVM_DIR="$HOME/.nvm"
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
   nvm "$@"  # run the actual command you called
@@ -69,12 +72,15 @@ zle -N zle-line-init
 
 export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --exclude .git --exclude node_modules --exclude Library --exclude go --exclude venv/'
 
-export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+export ANDROID_HOME="$HOME/Library/Android/sdk"
 
 export PATH="$ANDROID_HOME/platform-tools:$PATH"
 export PATH="$ANDROID_HOME/emulator:$PATH"
 export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$PATH"
 
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 
-export JAVA_HOME="/opt/homebrew/opt/openjdk@25/libexec/openjdk.jdk/Contents/Home"
-export ANDROID_HOME="$HOME/Library/Android/sdk"
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"

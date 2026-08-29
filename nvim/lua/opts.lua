@@ -110,3 +110,12 @@ vim.api.nvim_create_autocmd("FileType", {
 ---    vim.bo.expandtab = true
 ---  end,
 ---})
+
+vim.api.nvim_create_user_command("Mem", function()
+	local rss = vim.uv.resident_set_memory() / 1024 / 1024
+	local lua = collectgarbage("count") / 1024
+	local buffers = #vim.api.nvim_list_bufs()
+	local clients = #vim.lsp.get_clients()
+
+	print(string.format("RSS: %.1f MiB | Lua: %.1f MiB | buffers: %d | LSP clients: %d", rss, lua, buffers, clients))
+end, {})

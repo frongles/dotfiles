@@ -20,6 +20,7 @@ require("mason-lspconfig").setup({
 		"wgsl_analyzer",
 		"html",
 		"kotlin_lsp",
+		"ansiblels",
 	},
 
 	automatic_enable = {
@@ -76,7 +77,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		bufmap("n", "gd", vim.lsp.buf.definition, "Go to definition")
 		bufmap("n", "gD", vim.lsp.buf.declaration, "Go to declaration")
 		bufmap("n", "gi", vim.lsp.buf.implementation, "Go to implementation")
-		bufmap("n", "lr", vim.lsp.buf.references, "List references")
+		bufmap("n", "<leader>lr", vim.lsp.buf.references, "List references")
 		bufmap("n", "K", vim.lsp.buf.hover, "Hover documentation")
 		bufmap("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
 		bufmap({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "Code action")
@@ -163,6 +164,10 @@ vim.lsp.config["bashls"] = {
 	capabilities = capabilities,
 }
 
+vim.lsp.config["ansiblels"] = {
+	capabilities = capabilities,
+}
+
 vim.lsp.config["wgsl_analyzer"] = {
 	capabilities = capabilities,
 }
@@ -204,7 +209,7 @@ vim.diagnostic.config({
 
 vim.lsp.config["ts_ls"] = {
 	capabilities = capabilities,
-	filetypes = { "typescript", "javascript", "html" },
+	filetypes = { "typescript", "typescriptreact", "javascriptreact", "javascript", "html" },
 }
 
 vim.lsp.config["html"] = {
