@@ -15,6 +15,7 @@ vim.opt.hlsearch = true
 vim.opt.termguicolors = true
 vim.opt.cursorline = true
 vim.opt.scrolloff = 10
+vim.opt.undofile = true
 
 vim.opt.clipboard:append("unnamedplus")
 

@@ -13,6 +13,7 @@ export CARGO_PROFILE_DEV_DEBUG=false
 export CARGO_PROFILE_DEV_STRIP=true
 
 export PSQL_PAGER="bat --wrap never --plain"
+export PAGER="bat --wrap=never --plain"
 
 # go binaries
 export PATH="$PATH:$HOME/go/bin"
@@ -22,23 +23,11 @@ export PATH="$PATH:$HOME/.local/bin"
 # aliases
 alias ls="eza -la"
 
+alias gs="git status"
+alias gl="git lg"
+alias gd="git diff"
 
-export NVM_DIR="$HOME/.nvm"
-export NVM_SYMLINK_CURRENT=true
-
-## Lazy load nvm
-nvm() {
-  unset -f nvm node npm npx  # remove the placeholder functions
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-  nvm "$@"  # run the actual command you called
-}
-
-
-# Same for node/npm/npx so they also trigger the load
-node() { nvm; node "$@"; }
-npm()  { nvm; npm "$@"; }
-npx()  { nvm; npx "$@"; }
+alias gw="./gradlew"
 
 
 # Cargo cross automation
@@ -80,7 +69,21 @@ export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$PATH"
 
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 
+nvimchanges() {
+    git diff --name-only --relative --diff-filter=ACMR -z | xargs -0 nvim --
+}
+
+autoload -U compinit
+compinit
+
+source "$(brew --prefix)/share/zsh/site-functions/_gradle"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/frasercrumpler/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/frasercrumpler/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/frasercrumpler/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/frasercrumpler/google-cloud-sdk/completion.zsh.inc'; fi

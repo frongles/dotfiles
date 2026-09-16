@@ -21,6 +21,9 @@ require("mason-lspconfig").setup({
 		"html",
 		"kotlin_lsp",
 		"ansiblels",
+		"terraformls",
+		"tombi",
+		"fish_lsp",
 	},
 
 	automatic_enable = {
@@ -165,6 +168,10 @@ vim.lsp.config["bashls"] = {
 }
 
 vim.lsp.config["ansiblels"] = {
+	capabilities = capabilities,
+}
+
+vim.lsp.config["terraformls"] = {
 	capabilities = capabilities,
 }
 
