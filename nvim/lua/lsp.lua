@@ -208,10 +208,12 @@ vim.lsp.config["lua_ls"] = {
 }
 
 vim.diagnostic.config({
-	virtual_text = true, -- show inline errors/warnings
-	signs = true, -- show in gutter (left side)
-	underline = true, -- underline problematic code
+	virtual_text = false,
+	virtual_lines = { current_line = true },
+	signs = true,
+	underline = true,
 	update_in_insert = false,
+	severity_sort = true,
 })
 
 vim.lsp.config["ts_ls"] = {
