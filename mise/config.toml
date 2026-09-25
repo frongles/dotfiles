@@ -1,0 +1,6 @@
+[settings]
+auto_env = true
+
+[tools]
+java = "temurin-17"
+node = "lts"
