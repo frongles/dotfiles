@@ -11,6 +11,8 @@ if status is-interactive
     alias gl="git lg"
     alias gd="git diff"
     alias gw="./gradlew"
+
+    source "$__fish_config_dir/completions/gradlew.fish"
 end
 
 
@@ -34,6 +36,7 @@ set -gx PSQL_PAGER "bat --wrap never --plain"
 # Paths
 fish_add_path $HOME/go/bin
 fish_add_path $HOME/.local/bin
+fish_add_path "$HOME/.cargo/bin"
 
 
 # Cargo cross automation
@@ -55,8 +58,14 @@ function nvimchanges
     git diff --name-only --relative --diff-filter=ACMR -z | xargs -0 nvim --
 end
 
+function pg --description "Connect to the current environment's database"
+    if not set -q DATABASE_URL; or test -z "$DATABASE_URL"
+        echo "DATABASE_URL is not set" >&2
+        return 1
+    end
 
-
+    psql "$DATABASE_URL" $argv
+end
 
 # fzf
 set -gx FZF_DEFAULT_COMMAND \

@@ -17,7 +17,14 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 10
 vim.opt.undofile = true
 
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
+
 vim.opt.clipboard:append("unnamedplus")
+
+vim.o.winborder = "rounded"
 
 -- Open Telescope file picker on startup if no file was provided
 vim.api.nvim_create_autocmd("VimEnter", {

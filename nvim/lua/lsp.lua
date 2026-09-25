@@ -14,7 +14,6 @@ require("mason-lspconfig").setup({
 		"postgres_lsp",
 		"basedpyright",
 		"lua_ls",
-		"stylua",
 		"bashls",
 		"yamlls",
 		"wgsl_analyzer",
@@ -24,6 +23,8 @@ require("mason-lspconfig").setup({
 		"terraformls",
 		"tombi",
 		"fish_lsp",
+		"lemminx",
+		"docker_compose_language_service",
 	},
 
 	automatic_enable = {
@@ -84,13 +85,34 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		bufmap("n", "K", vim.lsp.buf.hover, "Hover documentation")
 		bufmap("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
 		bufmap({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "Code action")
+
+		local client = vim.lsp.get_client_by_id(event.data.client_id)
+		if not client then
+			return
+		end
+
+		if client:supports_method("textDocument/linkedEditingRange") then
+			vim.lsp.linked_editing_range.enable(true, {
+				client_id = client.id,
+				bufnr = bufnr,
+			})
+		end
+
+		if client:supports_method("textDocument/onTypeFormatting") then
+			vim.lsp.on_type_formatting.enable(true, {
+				client_id = client.id,
+			})
+		end
 	end,
 })
 
--- LSP server setup (using lspconfig)
+-- LSP server setup
+
+vim.lsp.config("*", {
+	capabilities = capabilities,
+})
 
 vim.lsp.config["rust_analyzer"] = {
-	capabilities = capabilities,
 
 	-- https://rust-analyzer.github.io/book/configuration
 	settings = {
@@ -142,47 +164,13 @@ vim.lsp.config["rust_analyzer"] = {
 	},
 }
 
-vim.lsp.config["clangd"] = {
-	capabilities = capabilities,
-}
-
-vim.lsp.config["html"] = {
-	capabilities = capabilities,
-}
-
-vim.lsp.config["yamlls"] = {
-	capabilities = capabilities,
-}
-
-vim.lsp.config["eslint"] = {
-	capabilities = capabilities,
-}
-
 vim.lsp.config["postgres_lsp"] = {
-	capabilities = capabilities,
 	workspace_required = true,
 }
 
-vim.lsp.config["bashls"] = {
-	capabilities = capabilities,
-}
-
-vim.lsp.config["ansiblels"] = {
-	capabilities = capabilities,
-}
-
-vim.lsp.config["terraformls"] = {
-	capabilities = capabilities,
-}
-
-vim.lsp.config["wgsl_analyzer"] = {
-	capabilities = capabilities,
-}
-
 vim.lsp.config["basedpyright"] = {
-	capabilities = capabilities,
-	basedpyright = {
-		settings = {
+	settings = {
+		basedpyright = {
 			analysis = {
 				diagnosticMode = "openFilesOnly",
 				useLibraryCodeForTypes = true,
@@ -192,7 +180,6 @@ vim.lsp.config["basedpyright"] = {
 }
 
 vim.lsp.config["lua_ls"] = {
-	capabilities = capabilities,
 	settings = {
 		Lua = {
 			diagnostics = {
@@ -217,12 +204,10 @@ vim.diagnostic.config({
 })
 
 vim.lsp.config["ts_ls"] = {
-	capabilities = capabilities,
 	filetypes = { "typescript", "typescriptreact", "javascriptreact", "javascript", "html" },
 }
 
 vim.lsp.config["html"] = {
-	capabilities = capabilities,
 	filetypes = { "html" },
 	init_options = {
 		configurationSection = { "html", "css", "javascript" },
