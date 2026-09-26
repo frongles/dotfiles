@@ -2,5 +2,14 @@
 auto_env = true
 
 [tools]
+bat = "latest"
+bottom = "latest"
+delta = "latest"
+eza = "latest"
+fzf = "latest"
 java = "temurin-17"
+jq = "latest"
 node = "lts"
+ripgrep = "latest"
+terraform = "latest"
+uv = "latest"

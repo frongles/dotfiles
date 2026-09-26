@@ -119,6 +119,9 @@ vim.lsp.config["rust_analyzer"] = {
 		["rust-analyzer"] = {
 			-- Set the cargo command to clippy instead of check
 			checkOnSave = true,
+			cargo = {
+				targetDir = true,
+			},
 			check = {
 				--allTargets = false,
 				command = "clippy",

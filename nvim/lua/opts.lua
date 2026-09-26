@@ -127,3 +127,9 @@ vim.api.nvim_create_user_command("Mem", function()
 
 	print(string.format("RSS: %.1f MiB | Lua: %.1f MiB | buffers: %d | LSP clients: %d", rss, lua, buffers, clients))
 end, {})
+
+vim.api.nvim_create_autocmd("CursorHoldI", {
+	callback = function()
+		vim.lsp.buf.signature_help({ silent = true })
+	end,
+})
