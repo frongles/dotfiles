@@ -1,6 +1,9 @@
 [settings]
 auto_env = true
 
+[settings.github]
+credential_command = "gh auth token"
+
 [tools]
 bat = "latest"
 bottom = "latest"
@@ -24,3 +27,6 @@ tmux = "latest"
 tree-sitter = "latest"
 fd = "latest"
 gdu = "latest"
+caddy = "latest"
+step = "latest"
+rust = "latest"
