@@ -13,13 +13,16 @@ if status is-interactive
     alias gw="./gradlew"
 
     source "$__fish_config_dir/completions/gradlew.fish"
+    set -g fish_color_autosuggestion brblack
 end
 
 
 # Starship shell prompt
 
 # Rust build cache
-set -gx RUSTC_WRAPPER /opt/homebrew/bin/sccache
+if type -q sccache
+    set -gx RUSTC_WRAPPER (command -v sccache)
+end
 set -gx SCCACHE_CACHE_SIZE 20G
 
 set -gx CARGO_PROFILE_DEV_DEBUG false
