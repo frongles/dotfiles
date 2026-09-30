@@ -151,31 +151,6 @@ require("lazy").setup({
 		branch = "main",
 		build = ":TSUpdate",
 		config = function()
-			require("nvim-treesitter").setup({
-				ensure_installed = {
-					"sql",
-					"bash",
-					"lua",
-					"python",
-					"javascript",
-					"rust",
-					"typescript",
-					"markdown",
-					"toml",
-					"wgsl",
-					"kotlin",
-				},
-				sync_install = false,
-				auto_install = true,
-				ignore_install = {},
-				modules = {},
-				highlight = {
-					enable = true,
-				},
-				indent = {
-					enable = true,
-				},
-			})
 			require("nvim-treesitter").install({
 				"sql",
 				"bash",
@@ -188,6 +163,19 @@ require("lazy").setup({
 				"toml",
 				"wgsl",
 				"kotlin",
+				"yaml",
+				"terraform",
+				"hcl",
+				"dockerfile",
+				"json",
+				"html",
+				"css",
+				"ini",
+				"gitignore",
+				"gitcommit",
+				"git_config",
+				"git_rebase",
+				"diff",
 			})
 		end,
 	},
@@ -275,7 +263,32 @@ require("lazy").setup({
 					javascript = { "prettierd", "prettier", stop_after_first = true },
 					javascriptreact = { "prettierd", "prettier", stop_after_first = true },
 					--typescript = { "prettierd" },
+					sh = { "shfmt" },
+					bash = { "shfmt" },
 				},
+			})
+		end,
+	},
+
+	-- linting engine
+	{
+		"mfussenegger/nvim-lint",
+		config = function()
+			local lint = require("lint")
+			lint.linters_by_ft = {
+				-- tflint runs as an LSP via mason-lspconfig
+				dockerfile = { "hadolint" },
+			}
+
+			vim.api.nvim_create_autocmd({ "BufReadPost", "BufWritePost", "InsertLeave" }, {
+				group = vim.api.nvim_create_augroup("user-lint", { clear = true }),
+				callback = function(ev)
+					lint.try_lint()
+					-- actionlint only understands GitHub workflow files
+					if vim.api.nvim_buf_get_name(ev.buf):match("/%.github/workflows/") then
+						lint.try_lint("actionlint")
+					end
+				end,
 			})
 		end,
 	},

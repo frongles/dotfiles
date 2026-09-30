@@ -89,16 +89,23 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 
 vim.filetype.add({
 	extension = {
-		service = "ini",
-		timer = "ini",
-		socket = "ini",
-		target = "ini",
-		mount = "ini",
-		automount = "ini",
-		path = "ini",
-		slice = "ini",
+		service = "systemd",
+		timer = "systemd",
+		socket = "systemd",
+		target = "systemd",
+		mount = "systemd",
+		automount = "systemd",
+		path = "systemd",
+		slice = "systemd",
+	},
+	pattern = {
+		[".*/docker%-compose[^/]*%.ya?ml"] = "yaml.docker-compose",
+		[".*/compose[^/]*%.ya?ml"] = "yaml.docker-compose",
 	},
 })
+
+-- no systemd tree-sitter parser; unit files are ini-shaped
+vim.treesitter.language.register("ini", "systemd")
 
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "*",
