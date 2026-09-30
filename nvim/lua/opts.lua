@@ -136,7 +136,10 @@ vim.api.nvim_create_user_command("Mem", function()
 end, {})
 
 vim.api.nvim_create_autocmd("CursorHoldI", {
-	callback = function()
+	callback = function(args)
+		if #vim.lsp.get_clients({ bufnr = args.buf, method = "textDocument/signatureHelp" }) == 0 then
+			return
+		end
 		vim.lsp.buf.signature_help({ silent = true })
 	end,
 })
