@@ -1,5 +1,5 @@
 [core]
-	excludesfile = /Users/frasercrumpler/.gitignore
+	excludesfile = ~/.gitignore
     editor = nvim
     pager = delta
 	whitespace = trail,space-before-tab
@@ -29,7 +29,7 @@
     showStash = true
 [commit]
     verbose = true
-	template = /Users/frasercrumpler/.gitmessage
+	template = ~/.gitmessage
 [diff]
 	colorMoved = default
     algorithm = histogram
