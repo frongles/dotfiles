@@ -23,6 +23,7 @@ LINKS=(
   "fish:$CONFIG/fish"
   "mise:$CONFIG/mise"
   "nvim:$CONFIG/nvim"
+  "pgcli/config:$CONFIG/pgcli/config"
   "starship.toml:$CONFIG/starship.toml"
 )
 
