@@ -25,6 +25,11 @@ require("mason-lspconfig").setup({
 		"fish_lsp",
 		"lemminx",
 		"docker_compose_language_service",
+		"jsonls",
+		"dockerls",
+		"cssls",
+		"gh_actions_ls",
+		"systemd_lsp",
 	},
 
 	automatic_enable = {
@@ -36,6 +41,11 @@ require("mason-tool-installer").setup({
 	ensure_installed = {
 		"stylua",
 		"prettierd",
+		"shellcheck",
+		"shfmt",
+		"hadolint",
+		"actionlint",
+		"tflint",
 	},
 })
 
