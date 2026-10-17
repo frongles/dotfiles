@@ -2,6 +2,7 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
     mise activate fish | source
     starship init fish | source
+    step completion fish | source
     fish_vi_key_bindings
 
     set -g fish_escape_delay_ms 10
