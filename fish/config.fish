@@ -77,7 +77,12 @@ set -gx FZF_DEFAULT_COMMAND \
 
 
 # Android
-set -gx ANDROID_HOME "$HOME/Library/Android/sdk"
+switch (uname)
+    case Darwin
+        set -gx ANDROID_HOME "$HOME/Library/Android/sdk"
+    case Linux
+        set -gx ANDROID_HOME "$HOME/Android/Sdk"
+end
 
 fish_add_path $ANDROID_HOME/platform-tools
 fish_add_path $ANDROID_HOME/emulator

@@ -1,7 +1,11 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
-[](red)\
+${env_var.PROMPT_HOST_MAUVE}\
+${env_var.PROMPT_HOST_TEAL}\
+${env_var.PROMPT_HOST_BLUE}\
+${env_var.PROMPT_HOST_PINK}\
+${env_var.PROMPT_HOST_SKY}\
 $os\
 $username\
 [](bg:peach fg:red)\
@@ -29,6 +33,28 @@ $line_break\
 $character"""
 
 palette = 'catppuccin_mocha'
+
+# One segment per host color, set by fish/conf.d/prompt_host.fish.
+
+[env_var.PROMPT_HOST_MAUVE]
+variable = "PROMPT_HOST_MAUVE"
+format = '[](mauve)[ $env_value ](bg:mauve fg:crust)[](fg:mauve bg:red)'
+
+[env_var.PROMPT_HOST_TEAL]
+variable = "PROMPT_HOST_TEAL"
+format = '[](teal)[ $env_value ](bg:teal fg:crust)[](fg:teal bg:red)'
+
+[env_var.PROMPT_HOST_BLUE]
+variable = "PROMPT_HOST_BLUE"
+format = '[](blue)[ $env_value ](bg:blue fg:crust)[](fg:blue bg:red)'
+
+[env_var.PROMPT_HOST_PINK]
+variable = "PROMPT_HOST_PINK"
+format = '[](pink)[ $env_value ](bg:pink fg:crust)[](fg:pink bg:red)'
+
+[env_var.PROMPT_HOST_SKY]
+variable = "PROMPT_HOST_SKY"
+format = '[](sky)[ $env_value ](bg:sky fg:crust)[](fg:sky bg:red)'
 
 [os]
 disabled = false
