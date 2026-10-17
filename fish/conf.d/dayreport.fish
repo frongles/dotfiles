@@ -1,15 +1,20 @@
 # Daily journal. The 08:03 launchd job writes yesterday's report, then the first
-# interactive shell of the day shows it and asks what today is for.
+# interactive shell of the day shows a short summary of it.
 
 set -g __journal_dir $HOME/journal
 set -g __dayreport_dir $HOME/.local/share/dayreport
+
+# BSD date (macOS) takes -v, GNU date (Linux) takes -d.
+function __dayreport_yesterday
+    date -v-1d +%F 2>/dev/null; or date -d yesterday +%F
+end
 
 function dayreport --description "Generate the day report, defaults to yesterday"
     sh $__dayreport_dir/run.sh $argv
 end
 
 function journal --description "Open a day's report, defaults to yesterday"
-    set -l day (test -n "$argv[1]"; and echo $argv[1]; or date -v-1d +%F)
+    set -l day (test -n "$argv[1]"; and echo $argv[1]; or __dayreport_yesterday)
     if test -f $__journal_dir/$day.md
         nvim $__journal_dir/$day.md
     else
@@ -17,65 +22,31 @@ function journal --description "Open a day's report, defaults to yesterday"
     end
 end
 
-function goals --description "Write or edit today's goals"
-    mkdir -p $__journal_dir/goals
-    nvim $__journal_dir/goals/(date +%F).md
-end
-
 function __dayreport_morning
     set -l today (date +%F)
-    set -l yesterday (date -v-1d +%F)
-    set -l goalfile $__journal_dir/goals/$today.md
-    set -l marker $__journal_dir/goals/.asked-$today
+    set -l yesterday (__dayreport_yesterday)
     set -l report $__journal_dir/$yesterday.md
+    set -l marker $__dayreport_dir/last-shown
 
-    # Ask once a day, only after the report exists, never in a nested or dumb shell.
-    if test -e $goalfile; or test -e $marker; or not test -f $report
+    # Show once a day, only after the report exists, never in a nested or dumb shell.
+    if not test -f $report; or test "$(cat $marker 2>/dev/null)" = $today
         return
     end
     if not status is-interactive; or test -n "$CLAUDECODE"
         return
     end
 
-    mkdir -p $__journal_dir/goals
-    touch $marker
+    mkdir -p $__dayreport_dir
+    echo $today > $marker
 
     set_color --bold
     echo ""
     echo "  Yesterday ($yesterday)"
     set_color normal
     sed -n '3,6p' $report | sed 's/^/  /'
-    echo ""
     set_color brblack
-    echo "  full report: journal    skip: press enter"
+    echo "  full report: journal"
     set_color normal
-    echo ""
-
-    set -l lines
-    while true
-        read -P "  goal for today > " -l line
-        if test -z "$line"
-            break
-        end
-        set -a lines "- $line"
-    end
-
-    if test (count $lines) -gt 0
-        # printf over the list, not string join. A goal line starts with "- ",
-        # which string join parses as an option.
-        begin
-            printf '# Goals %s\n\n' $today
-            printf '%s\n' $lines
-        end > $goalfile
-        if test -s $goalfile
-            set_color green
-            echo "  saved "(count $lines)" goals to "(string replace $HOME '~' $goalfile)
-        else
-            set_color red
-            echo "  failed to write $goalfile"
-        end
-        set_color normal
-    end
     echo ""
 end
 
